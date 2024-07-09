@@ -1,0 +1,114 @@
+.border {
+    border: 1px solid white;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.bg-black {
+    background-color: black;
+    color: white;
+}
+
+.bg-grey {
+    background-color: #121212;
+}
+
+.text-grey {
+    color: #b3b3b3;
+}
+
+.invert {
+    filter: invert(1);
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+i {
+    cursor: pointer;
+}
+
+button {
+    border: none;
+    outline: none;
+    font-weight: 600;
+    background: none;
+    font-size: 14px;
+}
+
+input{
+    outline: none;
+}
+.reduce-brightness{
+    filter: brightness(0.3);
+}
+
+
+
+/* Scrollbar for playlist section */
+#right main::-webkit-scrollbar {
+    width: 12px;
+    /* height: 12px; */
+}
+
+/* Track */
+#right main::-webkit-scrollbar-track {
+    display: none;
+    background: #121212; 
+    border-radius: 10px; 
+}
+
+/* Handle */
+#right main::-webkit-scrollbar-thumb {
+    background: #272727;
+    border-radius: 10px;
+    border: 3px solid #121212;
+}
+
+/* Handle on hover */
+#right main::-webkit-scrollbar-thumb:hover {
+    background: rgba(61, 61, 61, 0.686);
+}
+#right main::-webkit-scrollbar-corner {
+    display: none;
+    /* background-color: red; */
+}
+
+
+/* Scrollbar for library section */
+#song-list::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+#song-list::-webkit-scrollbar-track {
+    background: transparent; 
+    border-radius: 10px; 
+}
+
+/* Handle */
+#song-list::-webkit-scrollbar-thumb {
+    background: #272727;
+    border-radius: 10px;
+    border: 3px solid #121212;
+}
+
+/* Handle on hover */
+#song-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(61, 61, 61, 0.686);
+}
+
+
+

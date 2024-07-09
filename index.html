@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Web Player: Music for everyone</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/5678c3e1ef.js" crossorigin="anonymous"></script>
+    
+    <style>
+        div[style*="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]{
+            display: none !important;
+        }
+    </style>
+
+    <link rel="stylesheet" href="css/utility.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body class="bg-black">
+    <!-- <img id="logo" src="logo.svg" alt="logo"> -->
+    <section id="left">
+        <div id="navbar" class="bg-grey">
+            <a id="logo" href="#">
+                <img class="invert" src="images/logo.svg" alt="logo">
+                <i class="fa-solid fa-xmark"></i>
+            </a>
+            <a id="home" href="#">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a class="text-grey" id="search" href="#">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Search</span>
+            </a>
+        </div>
+        <div id="library" class="bg-grey">
+            <header class="text-grey">
+                <div class="text">
+                    <i class="fa-solid fa-swatchbook"></i>
+                    <span>Your Library</span>
+                </div>
+                <div class="plus-icon-container">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+            </header>
+            <div id="playlist-info">
+                <div id="playlist-title-container">
+                    <div id="playlist-title"></div>
+                    <i class="fa-solid fa-repeat repeat-off"></i>
+                </div>
+                <div id="playlist-desc"></div>
+            </div>
+            <div id="song-list">
+                <ul>
+
+                    <!-- songs li's here -->
+                </ul>
+            </div>
+            <footer id="left-footer">
+                <div id="footer-links">
+                    <div class="link-box"><a href="https://www.spotify.com/in-en/legal/end-user-agreement/"
+                            target="_blank">Legal</a></div>
+                    <div class="link-box"><a href="https://www.spotify.com/in-en/safetyandprivacy/reporting-content"
+                            target="_blank">Safety & Privacy Center</a></div>
+                    <div class="link-box"><a href="https://www.spotify.com/in-en/legal/privacy-policy/"
+                            target="_blank">Privacy Policy</a></div>
+                    <div class="link-box"><a href="https://www.spotify.com/in-en/legal/cookies-policy/"
+                            target="_blank">Cookies</a></div>
+                    <div class="link-box"><a href="https://www.spotify.com/in-en/legal/privacy-policy/#s3"
+                            target="_blank">About Ads</a></div>
+                    <div class="link-box"><a href="https://www.spotify.com/in-en/accessibility"
+                            target="_blank">Accessibility</a></div>
+
+                </div>
+                <div id="cookies-link"><a href="https://www.spotify.com/in-en/legal/cookies-policy/"
+                        target="_blank">Cookies</a></div>
+                <div id="choose-language">
+                    <i class="fa-solid fa-globe"></i>
+                    <p>English</p>
+                </div>
+            </footer>
+        </div>
+    </section>
+    <section id="right" class="bg-grey">
+        <header>
+            
+            <div class="nav-btn">
+                <div id="hamburger">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+                <div class="back text-grey"><i class="fa-solid fa-chevron-left"></i></div>
+                <div class="frwd"><i class="fa-solid fa-chevron-right"></i></div>
+            </div>
+            <div class="profile-btn">
+                <div class="signup-btn text-grey">Sign up</div>
+                <div class="login-btn">Log in</div>
+            </div>
+        </header>
+
+        <main id="playlist">
+            <header>Spotify Playlists</header>
+            <section id="container">
+
+                <!-- <div class="cards">
+                    <div class="img">
+                        <img clas="thumbnail" src="https://i.scdn.co/image/ab67706f000000022226ca11732e0fdc914409c5" alt="song-img">
+                        <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <p class="title">New Music Friday</p>
+                    <p class="description text-grey">The very best in new music from around the world. Cover: Peso Pluma</p>
+                </div> -->
+            </section>
+
+        </main>
+        <section id="player" class="desktop-player">
+            <div id="player-song-info" >
+                <div id="player-song-title"></div>
+                <div id="player-song-btns">
+                    <i id="previous" class="fa-solid fa-backward"></i>
+                    <i id="play" class="fa-regular fa-circle-play"></i>
+                    <i id="next" class="fa-solid fa-forward"></i>
+                </div>
+                <div id="player-song-time-vol">
+                    <div id="player-song-time">
+                        <div id="current-time">00:00</div>
+                        <span id="time-separator">/</span>
+                        <div id="duration">00:00</div>
+                    </div>
+                    <div id="player-song-vol">
+                        <i style="min-width: 20px;" class="fa-solid fa-volume-low"></i>
+                        <input type="range" name="vol-seekbar" id="volumebar" value="30">
+                    </div>
+                </div>
+            </div>
+            <div id="player-song-seekbar-container">
+                <input id="song-seekbar" type="range" step="0.1" value="0">
+            </div>
+        </section>
+
+
+    </section>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var disclaimer = document.querySelector("img[alt='www.000webhost.com']");
+            if(disclaimer){
+                disclaimer.remove();
+            }
+        });
+    </script>
+
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
