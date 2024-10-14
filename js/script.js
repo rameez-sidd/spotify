@@ -2,6 +2,7 @@ console.log("Let's Write Javascript");
 
 
 let loop = false;
+
 let songs;
 
 let currPlayList = {
@@ -22,7 +23,7 @@ let isUpdatingSeekbar = false;
 let currPlayBtn = null;
 
 function getURL(song) {
-    return `https://spotifs.000webhostapp.com/songs/${currFolder.replaceAll(" ", "%20")}/${song.replaceAll(" ", "%20")}.mp3`
+    return `http://127.0.0.1:5500/songs/${currFolder.replaceAll(" ", "%20")}/${song.replaceAll(" ", "%20")}.mp3`
 }
 
 function formatTime(seconds) {
@@ -35,21 +36,21 @@ function formatTime(seconds) {
 }
 
 async function displayAlbums() {
-    let a = await fetch("/songs/");
+    let a = await fetch("http://127.0.0.1:5500/songs/");
     let response = await a.text();
     let div = document.createElement("div");
     div.innerHTML = response;
-    let anchors = div.querySelector("table").querySelectorAll('a:not([href^="/"]):not([href^="?"])');
+    let anchors = div.querySelector("ul").querySelectorAll('a[href*="/songs"]')
     let cardContainer = document.querySelector("#container");
 
-    anchors.forEach(async (a) => {  
-        let folder = a.innerHTML.slice(0, -1);
+    anchors.forEach(async (a) => {
+        let folder = a.title;
 
         let promise = await fetch(`/songs/${folder}/info.json`);
         let response = await promise.json();
 
         cardContainer.innerHTML += `<div class="cards" data-folder="${folder}">
-                    <div class="img" style="background-image:url('../songs/${folder}/cover.jpeg'), url('https://i.ebayimg.com/images/g/Lh8AAOSwFQVdsuBg/s-l1200.jpg')">
+                    <div class="img" style="background-image:url('../Songs/${folder}/cover.jpeg'), url('https://i.ebayimg.com/images/g/Lh8AAOSwFQVdsuBg/s-l1200.jpg')">
                         
                         <div class="play-icon"><i class="fa-solid fa-play"></i></div>
                     </div>
@@ -63,19 +64,22 @@ async function displayAlbums() {
             card.addEventListener("click", async (item) => {
                 currFolder = item.currentTarget.dataset.folder;
                 document.querySelector("#library #playlist-info").style.display = "flex";
-                document.querySelector("#library header").style.display = "none";
+                document.querySelector("#library header").style.display = "none";  //new commit
+                
                 document.querySelector("#playlist-title").innerHTML = item.currentTarget.dataset.folder;
                 document.querySelector("#playlist-desc").innerHTML = item.currentTarget.querySelector(".description").innerHTML;
-                
                 songs = await getSongsTitle(item.currentTarget.dataset.folder);
+
                 library.style.left = "0%";
+
                 if (window.innerWidth <= 920) {
+                    // modified
                     document.querySelector("#right header").classList.add("reduce-brightness");
                     document.querySelector("#right main").classList.add("reduce-brightness");
                     document.querySelector("#right main").style.overflowY = "hidden";
 
                 }
-
+                
                 loadLibrary(songs);
                 if (item.target.closest(".play-icon") && card.contains(item.target.closest(".play-icon"))) {
                     let songLIs = document.querySelector("#song-list").querySelectorAll("li");
@@ -174,6 +178,7 @@ function readyToPlay(songLIs) {
         }
 
         song.addEventListener("click", (e) => {
+            
             if (currPlayList.list.length !== 0 && currPlayList.name === currFolder) {
             } else {
                 currPlayList.name = currFolder;
@@ -223,7 +228,7 @@ function equal(arr1, arr2) {
 }
 
 async function getSongsElement(folder) {
-    let a = await fetch(`https://spotifs.000webhostapp.com/songs/${folder}/`);
+    let a = await fetch(`http://127.0.0.1:5500/songs/${folder}/`);
     let response = await a.text();
     let div = document.createElement("div");
     div.innerHTML = response;
@@ -246,15 +251,9 @@ async function getSongsLink() {
 
 async function getSongsTitle(folder) {
     let songs = await getSongsElement(folder);
-    console.log(songs);
     let songTitle = [];
     for (const song of songs) {
-        let title = song.href.replaceAll("%20", " ");
-        title = title.split(".com/");
-        title = title[1];
-        console.log(title);
-        title = title.slice(0, -4);
-        songTitle.push(title);
+        songTitle.push(song.title.substring(0, song.title.length - 4));
     }
 
     return songTitle;
@@ -269,6 +268,7 @@ async function main() {
 
     // Reset the play button when the song ends
     currSong.addEventListener('ended', () => {
+        // new commit
         if(loop === true){
             next.click(); 
             return;
@@ -336,7 +336,7 @@ async function main() {
         //search the current playing song in playlist
         let idx;
         for (let i = 0; i < currPlayList.list.length; i++) {
-            if (`https://spotifs.000webhostapp.com/songs/${currPlayList.name.replaceAll(" ", "%20")}/${(currPlayList.list[i].querySelector(".song-title").innerHTML).replaceAll(" ", "%20")}.mp3` == currSong.src) {
+            if (`http://127.0.0.1:5500/songs/${currPlayList.name.replaceAll(" ", "%20")}/${(currPlayList.list[i].querySelector(".song-title").innerHTML).replaceAll(" ", "%20")}.mp3` == currSong.src) {
                 idx = i - 1;
                 if (idx < 0) {
                     idx = currPlayList.list.length - 1;
@@ -363,8 +363,8 @@ async function main() {
                 break;
             }
         }
-        
-        if(play.classList.contains("fa-circle-play")){
+
+        if (play.classList.contains("fa-circle-play")) {
             play.setAttribute("class", "fa-regular fa-circle-pause");
         }
         player.querySelector("#player-song-title").innerHTML = currPlayList.list[idx].querySelector(".song-title").innerHTML;
@@ -377,7 +377,7 @@ async function main() {
         //search the current playing song in playlist
         let idx;
         for (let i = 0; i < currPlayList.list.length; i++) {
-            if (`https://spotifs.000webhostapp.com/songs/${currPlayList.name.replaceAll(" ", "%20")}/${(currPlayList.list[i].querySelector(".song-title").innerHTML).replaceAll(" ", "%20")}.mp3` == currSong.src) {
+            if (`http://127.0.0.1:5500/songs/${currPlayList.name.replaceAll(" ", "%20")}/${(currPlayList.list[i].querySelector(".song-title").innerHTML).replaceAll(" ", "%20")}.mp3` == currSong.src) {
                 idx = i + 1;
                 if (idx >= currPlayList.list.length) {
                     idx = 0;
@@ -399,14 +399,14 @@ async function main() {
                     icon.setAttribute("class", "fa-solid fa-pause");
                     currPlayBtn = icon;
 
-                    
+
                 }
 
                 break;
             }
         }
-        
-        if(play.classList.contains("fa-circle-play")){
+
+        if (play.classList.contains("fa-circle-play")) {
             play.setAttribute("class", "fa-regular fa-circle-pause");
         }
         player.querySelector("#player-song-title").innerHTML = currPlayList.list[idx].querySelector(".song-title").innerHTML;
@@ -492,13 +492,12 @@ async function main() {
         }
 
 
-        
+
 
 
     });
 
 }
-
 
 
 
@@ -512,6 +511,7 @@ document.querySelector(".fa-repeat").addEventListener("click", (e) => {
 
     }
 });
+
 
 document.querySelector("#hamburger").addEventListener("click", () => {
     document.querySelector("#left").style.left = "0%";
